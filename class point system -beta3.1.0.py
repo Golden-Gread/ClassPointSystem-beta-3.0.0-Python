@@ -19,6 +19,13 @@ by 长郡天心以太星穹工作室
         loading...         """)
 label.pack(pady=15)
 
+
+if os.path.exists('log\logdata.log'):
+    logfile = open('log\logdata.log','a',encoding='utf-8')
+else:
+    logfile = open('log\logdata.log','w',encoding='utf-8')
+
+
 def show_log_window():
     log_win = tk.Toplevel(root)
     log_win.title("系统日志")
@@ -40,7 +47,7 @@ def show_log_window():
             text_widget.see(tk.END)  # 自动滚动到底部
         except FileNotFoundError:
             text_widget.insert(tk.END, "日志文件不存在")
-        log_win.after(20, update_log)  # 每2秒刷新一次
+        log_win.after(20, update_log)  
     
     update_log()  # 初始加载
 show_log_window()
@@ -540,7 +547,7 @@ word1= tk. Label(root, text="""账号：""")
 word2= tk. Label(root, text="""密码：""")
 
 label1=tk.Label(root,text="""class point system beta3.0.0
-system version:beta3.0.0(oct 14 2024, 12:30:44)
+system version:beta3.1.0(oct 14 2024, 12:30:44)
 system encoding:UTF-8""")
 
 
@@ -575,10 +582,7 @@ def record(users_name,data):
     global record_list
     record_list.append('{},加减分记录:{},{}\n'.format(users_name,data,datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
-if os.path.exists('./log/logdata.log'):
-    logfile = open('./log/logdata.log','a',encoding='utf-8')
-else:
-    logfile = open('./log/logdata.log','w',encoding='utf-8')
+
 logfile.write('-------------------------------------------\n')
 logfile.close()
 login('system','INFO','class point system loaded')
@@ -594,7 +598,7 @@ else:
     window.title('error')
     window.geometry("300x100")
     label = tk.Label(window, text="""Error:
-找不到点数文件，请检查文件是否丢失或损坏。""")
+找不到积分文件，请检查文件是否丢失或损坏。""")
     label.pack(pady=15)
     login('system','ERROR','do not find point file')
     login('system','INFO','class point system exit')
@@ -607,7 +611,7 @@ if os.path.exists('name.xlsx'):
     name_file = xl.load_workbook('name.xlsx')
     name_sheet = name_file['Sheet1']
     for i in range(number):
-        namelist.append(name_sheet['A'+str(i+1)].value)
+        namelist.append(str(name_sheet['A'+str(i+1)].value))
     login('system','INFO','loading name file completely')
     name_file.close()
 else:

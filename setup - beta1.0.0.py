@@ -5,45 +5,43 @@ import easygui as gui
 ways = gui.diropenbox('选择安装目录')
 if os.path.exists('./record') == False:
     os.mkdir('./record')
-    f = open('./record/point_record.txt','w')
+    f = open('./record/record.cps','w')
     f.close()
 else:
     pass
 time.sleep(1)
 print('record文件夹初始化完毕_')
-if os.path.exists('./restore') == False:
-    os.mkdir('./restore')
-    f = open('./restore/restorefile_point.txt','w')
-    f1 = open('./restore/restorefile_record.txt','w')
-    f2 = open('./restore/restorefile_code.txt','w')
-    f.close()
-    f1.close()
-    f2.close()
-else:
-    pass
-time.sleep(1)
-print('restore文件夹初始化完毕_')
 list1 = os.listdir(ways)
 print(list1)
 if 'point.cps' not in list1:
     f = open('./point.cps','w')
+    f.write('0')
+    for i in range(0,48):
+        f.write(',0')
     f.close()
 time.sleep(1)
 print('目录文件初始化完毕_')
-if os.path.exists('./password') == False:
-    password = gui.enterbox('请输入密码\n')
+if os.path.exists('./password.cps') == False:
+    while True:
+        password = gui.passwordbox('请输入密码')
+        if password == '':
+            print('密码不能为空，请重新输入')
+        else:
+            break
     f = open('./password.cps','w')
     f.write(password)
     f.close()
 print('密码文件初始化完毕_')
 if os.path.exists('./backup') == False:
     os.mkdir('./backup')
-    f = open('./backup/point_backup.txt','w')
-    f1 = open('./backup/backup_file.txt','w')
-    f.close()
+    f1 = open('./backup/back_up_point.cps','w')
     f1.close()
 else:
     pass
 time.sleep(1)
 print('backup文件夹初始化完毕_')
-print('安装完成，主程序运行环境就绪_')
+if os.path.exists('./log/logdata.log') == False:
+    os.makedirs('./log')
+    f = open('./log/logdata.log','w',encoding='utf-8')
+    f.close()
+gui.msgbox('初始化完成！')
